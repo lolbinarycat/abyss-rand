@@ -38,4 +38,4 @@ randRunes n = do
   g <- getStdGen
   return $ fst $ randomRunes [] n g
 
-main = randRunes 8 >>= putStrLn
+main = randRunes 8 >>= putStrLn . sort
