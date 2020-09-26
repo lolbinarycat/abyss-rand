@@ -8,11 +8,18 @@ type AbyssRune = Char
 
 runes = [['A'..'F'],['G'..'K'],['L'..'O']]
 
-runeSize a | member a (runes !! 0) = 1
-runeSize a | member a (runes !! 1) = 2
-runeSize a | member a (runes !! 2) = 3
+-- | finds how many slots a rune takes up.
+runeSize :: AbyssRune -> Int
+runeSize = fn runes where
+  fn [] _ = error "invalid rune"
+  fn (l:ls) a | any (==a) l = 1
+  fn (l:ls) a = 1 + fn ls a
 
-randomElem :: (RandomGen r, UniformRange a) => r -> [a] -> (a,r) 
+{- runeSize a | member a (runes !! 0) = 1
+runeSize a | member a (runes !! 1) = 2
+runeSize a | member a (runes !! 2) = 3 -}
+
+randomElem :: (RandomGen r, UniformRange a) => r -> [a] -> (a,r)
 randomElem g l = let (i,ng) = uniformR (0,length l) g in (l !! i,ng)
 
 randomRune :: RandomGen r => [AbyssRune] -> Int -> r -> (AbyssRune,r)
@@ -25,4 +32,10 @@ randomRunes rs s g | s < 0 = error "runes do not fit in slots"
 randomRunes rs s g = let (r,ng) = (randomRune rs s g) in
   randomRunes (r:rs) (s - runeSize r) ng 
 
-main = getStdGen >>= (\g -> print $ fst $ randomRunes [] 8 g)
+-- | a version of randomRunes using the standard RNG
+randRunes :: Int -> IO [AbyssRune]
+randRunes n = do
+  g <- getStdGen
+  return $ fst $ randomRunes [] n g
+
+main = randRunes 8 >>= putStrLn
