@@ -20,7 +20,7 @@ runeSize a | member a (runes !! 1) = 2
 runeSize a | member a (runes !! 2) = 3 -}
 
 randomElem :: (RandomGen r, UniformRange a) => r -> [a] -> (a,r)
-randomElem g l = let (i,ng) = uniformR (0,length l) g in (l !! i,ng)
+randomElem g l = let (i,ng) = uniformR (0,length l-1) g in (l !! i,ng)
 
 randomRune :: RandomGen r => [AbyssRune] -> Int -> r -> (AbyssRune,r)
 -- | gets a random abyss rune not found in e that uses at most m slots.
