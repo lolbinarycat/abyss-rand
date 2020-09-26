@@ -4,7 +4,7 @@
 name:                abyss-rand
 version:             0.2.0.0
 -- synopsis:    
-description: generate random abyss loadouts of rivals of aether   
+description: generate random abyss loadouts for rivals of aether   
 license:             BSD3
 license-file:        LICENSE
 author:              binarycat
