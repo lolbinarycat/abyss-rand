@@ -15,10 +15,6 @@ runeSize = fn runes where
   fn (l:ls) a | any (==a) l = 1
   fn (l:ls) a = 1 + fn ls a
 
-{- runeSize a | member a (runes !! 0) = 1
-runeSize a | member a (runes !! 1) = 2
-runeSize a | member a (runes !! 2) = 3 -}
-
 randomElem :: (RandomGen r, UniformRange a) => r -> [a] -> (a,r)
 randomElem g l = let (i,ng) = uniformR (0,length l-1) g in (l !! i,ng)
 
@@ -38,4 +34,4 @@ randRunes n = do
   g <- getStdGen
   return $ fst $ randomRunes [] n g
 
-main = randRunes 8 >>= putStrLn . sort
+main = randRunes 8 >>= putStrLn . sort2
